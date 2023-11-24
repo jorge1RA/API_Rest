@@ -49,5 +49,6 @@ La API ofrece los siguientes endpoints:
 3. Inicia la aplicación: `node index.js`
 4. Utiliza herramientas como Postman para probar las rutas y operaciones de la API.
 
+## ESLint
 
-
+Este proyecto utiliza ESLint, una herramienta que verifica posibles errores del código y aplica reglas de estilo para mantener un código limpio y consistente.
