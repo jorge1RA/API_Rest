@@ -36,4 +36,12 @@ module.exports = {
   rules: {
     // Aquí puedes personalizar y agregar reglas específicas según tus necesidades
   },
+
+  // INFO: Se corrige el error añadiendo esta parte del código donde apunta y detecta la version del React
+  // Configuración de React
+  settings: {
+    react: {
+      version: "detect", // Detecta automáticamente la versión de React
+    },
+  },
 };
