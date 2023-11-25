@@ -56,34 +56,11 @@ app.get("/concesionarios", (request, response) => {
 });
 
 // Crear un nuevo concesionario
-
 app.post("/concesionarios", (request, response) => {
-  try {
-    const nuevoConcesionario = request.body;
-    // Validar los datos aquí si es necesario
-    if (
-      !nuevoConcesionario ||
-      !nuevoConcesionario.nombre ||
-      !nuevoConcesionario.direccion
-    ) {
-      response
-        .status(400)
-        .json({ message: "Datos de concesionario no válidos" });
-      return;
-    }
-    concesionarios.push(nuevoConcesionario);
-    response.json({ message: "Concesionario creado con éxito" });
-  } catch (error) {
-    console.error("Error al crear el concesionario:", error);
-    response.status(500).json({ message: "Error interno del servidor" });
-  }
-});
-
-/*app.post("/concesionarios", (request, response) => {
   const nuevoConcesionario = request.body;
   concesionarios.push(nuevoConcesionario);
   response.json({ message: "Concesionario creado con éxito" });
-});*/
+});
 
 // Obtener un solo concesionario por ID
 app.get("/concesionarios/:id", (request, response) => {
