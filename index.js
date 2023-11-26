@@ -33,8 +33,8 @@ let concesionarios = [
     nombre: "Concesionario 1",
     direccion: "Dirección 1",
     coches: [
-      { modelo: "Opel Corsa", cv: 100, precio: 15000 },
-      { modelo: "Renault Clio", cv: 90, precio: 14000 },
+      { id: 101, modelo: "Opel Corsa", cv: 100, precio: 15000 },
+      { id: 102, modelo: "Renault Clio", cv: 90, precio: 14000 },
     ],
   },
   {
@@ -42,11 +42,10 @@ let concesionarios = [
     nombre: "Concesionario 2",
     direccion: "Dirección 2",
     coches: [
-      { modelo: "Nissan Skyline R34", cv: 300, precio: 45000 },
-      { modelo: "Ford Mustang", cv: 450, precio: 55000 },
+      { id: 201, modelo: "Nissan Skyline R34", cv: 300, precio: 45000 },
+      { id: 202, modelo: "Ford Mustang", cv: 450, precio: 55000 },
     ],
   },
-
   // ...
 ];
 
@@ -102,9 +101,10 @@ app.delete("/concesionarios/:id", (request, response) => {
 
 // Obtener un coche específico de un concesionario por ID
 app.get("/concesionarios/:id/coches/:cocheId", (request, response) => {
-  const id = parseInt(request.params.id);
+  const concesionarioId = parseInt(request.params.id);
   const cocheId = parseInt(request.params.cocheId);
-  const concesionario = concesionarios.find((c) => c.id === id);
+
+  const concesionario = concesionarios.find((c) => c.id === concesionarioId);
 
   if (!concesionario) {
     response.status(404).json({ message: "Concesionario no encontrado" });
