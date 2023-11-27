@@ -29,9 +29,43 @@ app.listen(port, () => {
 
 // Definimos una estructura de datos
 // (temporal hasta incorporar una base de datos)
-let coches = [
-  { marca: "Renault", modelo: "Clio" },
-  { marca: "Nissan", modelo: "Skyline R34" },
+let concesionarios = [
+  {
+    id: "1",
+    nombre: "Concesionario Premium",
+    direccion: "Calle Principal 123",
+    coches: [
+      { id: "a1", modelo: "BMW Serie 3", cv: 255, precio: 45000 },
+      { id: "a2", modelo: "Audi A4", cv: 201, precio: 41000 },
+    ],
+  },
+  {
+    id: "2",
+    nombre: "Concesionario Deportivo",
+    direccion: "Avenida Revolución 456",
+    coches: [
+      { id: "b1", modelo: "Porsche 911", cv: 379, precio: 100000 },
+      { id: "b2", modelo: "Chevrolet Corvette", cv: 490, precio: 59000 },
+    ],
+  },
+  {
+    id: "3",
+    nombre: "Concesionario Familiar",
+    direccion: "Bulevar del Parque 789",
+    coches: [
+      { id: "c1", modelo: "Toyota RAV4", cv: 203, precio: 36000 },
+      { id: "c2", modelo: "Honda CR-V", cv: 190, precio: 33000 },
+    ],
+  },
+  {
+    id: "4",
+    nombre: "Concesionario Económico",
+    direccion: "Ruta del Sol 101",
+    coches: [
+      { id: "d1", modelo: "Hyundai Elantra", cv: 147, precio: 20000 },
+      { id: "d2", modelo: "Kia Forte", cv: 147, precio: 19000 },
+    ],
+  },
 ];
 
 // Obtener todos los concesionarios (GET)
