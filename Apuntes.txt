@@ -1,0 +1,83 @@
+Comandos MongoDB:
+-----------------
+
+Mostrar todas las colecciones en la base de datos actual: show collections
+
+Seleccionar una base de datos (cambiar el contexto): use nombre_de_la_base_de_datos
+
+Mostrar todas las bases de datos disponibles en el servidor: show dbs
+
+Insertar un documento en una colección: db.nombre_de_la_coleccion.insert({campo1: valor1, campo2: valor2, ...})
+
+Consultar documentos en una colección: db.nombre_de_la_coleccion.find({campo: valor})
+
+Actualizar documentos en una colección: db.nombre_de_la_coleccion.update({criterio}, {$set: {campo: nuevo_valor}})
+
+Eliminar documentos en una colección: db.nombre_de_la_coleccion.remove({criterio})
+
+--------------------------------------------------------------------------------------------------------------------
+
+
+show databases // Muestra las bases de datos disponibles
+show collections // Muestra las colecciones en la base de datos actual
+
+use <nombre-db> // Selecciona una base de datos específica (reemplaza <nombre-db> con el nombre que desees)
+
+db.pruebas.insertOne({clave: "valor"}) // Inserta un documento en la colección "pruebas"
+db.pruebas.find().pretty() // Muestra todos los documentos en la colección "pruebas"
+
+// Inserta varios documentos en la colección "inventory"
+db.inventory.insertMany([
+   // Documentos a insertar
+]);
+
+// Diversas consultas en la colección "inventory"
+db.inventory.find({ status: "D" })
+db.inventory.find({ status: { $in: [ "A", "D" ] } })
+db.inventory.find({ status: "A", qty: { $lt: 30 } })
+db.inventory.find({ $or: [ { status: "A" }, { qty: { $lt: 30 } } ] })
+db.inventory.find({
+   status: "A",
+   $or: [ { qty: { $lt: 30 } }, { item: /^p/ } ]
+})
+
+// Inserta más documentos en la colección "inventory"
+db.inventory.insertMany([
+   // Documentos a insertar
+]);
+
+// Actualiza un documento en la colección "inventory"
+db.inventory.updateOne(
+   { item: "paper" },
+   {
+     $set: { "size.uom": "cm", status: "P" },
+     $currentDate: { lastModified: true }
+   }
+)
+
+// Actualiza varios documentos en la colección "inventory"
+db.inventory.updateMany(
+   { "qty": { $lt: 50 } },
+   {
+     $set: { "size.uom": "in", status: "P" },
+     $currentDate: { lastModified: true }
+   }
+)
+
+// Reemplaza un documento en la colección "inventory"
+db.inventory.replaceOne(
+   { item: "paper" },
+   { item: "paper", instock: [ { warehouse: "A", qty: 60 }, { warehouse: "B", qty: 40 } ] }
+)
+
+// Inserta más documentos en la colección "inventory"
+db.inventory.insertMany([
+   // Documentos a insertar
+]);
+
+// Elimina todos los documentos de la colección "inventory"
+db.inventory.deleteMany({})
+
+// Elimina documentos en la colección "inventory" que cumplen con el criterio
+db.inventory.deleteMany({ status : "A" })
+db.inventory.deleteOne( { status: "D" } )
