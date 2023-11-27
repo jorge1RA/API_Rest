@@ -82,8 +82,10 @@ app.post("/concesionarios", (request, response) => {
 // Obtener un solo concesionario (GET)
 app.get("/concesionarios/:id", (request, response) => {
   const id = request.params.id;
-  const result = concesionarios[id];
-  response.json({ id });
+  const concesionario = concesionarios.find(
+    (concesionario) => concesionario.id === id
+  );
+  response.json({ concesionario });
 });
 
 // Actualizar un solo concesionarios (PUT)
