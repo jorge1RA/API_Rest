@@ -67,7 +67,7 @@ let concesionarios = [
 ];
 
 // Obtener todos los concesionarios.(GET)
-// //http://localhost:8080/concesionarios/
+//http://localhost:8080/concesionarios/
 app.get("/concesionarios", (request, response) => {
   response.json(concesionarios);
 });
@@ -92,14 +92,11 @@ app.get("/concesionarios/:id", (request, response) => {
 // Actualizar un solo concesionarios.(PUT)
 // http://localhost:8080/concesionarios/1 (Escribe en el body el cambio a realizar)
 app.put("/concesionarios/:id", (request, response) => {
-  Object.assign(
-    concesionarios.find(
-      (concesionario) => concesionario.id === request.params.id
-    ),
-    request.body
-  );
+  const concesionario = concesionarios.find((c) => concesionario.id === request.params.id);
+  if (concesionario) Object.assign(concesionario, request.body);
   response.json({ message: "Concesionario actualizado con éxito" });
 });
+
 
 // Borrar un elemento del array.(DELETE)
 // http://localhost:8080/concesionarios/1 (Ejemplo:1,2,3,4 'Elegir por id el número asignado para borrar')
