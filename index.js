@@ -1,34 +1,32 @@
 /* eslint-env node */
-// IMPORTANTE: ESTAMOS USANDO Node.js Y CIERTAS REGLAS DEBEN SER IGNORADAS AL USAR ESLINT
-// POR ESO AL COMIENZO COLOCAMPOS DE MANERA COMENTADA: /* eslint-env node */
+// Estamos usando Node.js, donde ciertas reglas podemos hacer que sean ignoradas ya
+// que estamos usando Eslint.
 
 /**
  * Tres formas de almacenar valores en memoria en javascript:
- *      let: se puede modificar
- *      var: se puede modificar
- *      const: es constante y no se puede modificar
+ *   let: se puede modificar
+ *   var: se puede modificar
+ *   const: es constante y no se puede modificar
  */
 
-// Importamos las bibliotecas necesarias.
-// Concretamente el framework express.
+// Importamos las bibliotecas necesarias concretamente el framework express.
 const express = require("express");
 
-// Inicializamos la aplicación
+// Inicializamos la aplicación.
 const app = express();
 
-// Indicamos que la aplicación puede recibir JSON (API Rest)
+// Indicamos que la aplicación puede recibir JSON (API Rest).
 app.use(express.json());
 
-// Indicamos el puerto en el que vamos a desplegar la aplicación
+// Indicamos el puerto en el que vamos a desplegar la aplicación.
 const port = process.env.PORT || 8080;
 
-// Arrancamos la aplicación
+// Arrancamos la aplicación.
 app.listen(port, () => {
   console.log(`Servidor desplegado en puerto: ${port}`);
 });
 
-// Definimos una estructura de datos
-// (temporal hasta incorporar una base de datos)
+// Definimos una estructura de datos (temporal hasta incorporar una base de datos).
 let concesionarios = [
   {
     id: "1",
@@ -68,85 +66,109 @@ let concesionarios = [
   },
 ];
 
-// Obtener todos los concesionarios (GET)
+// Obtener todos los concesionarios.(GET)
 // //http://localhost:8080/concesionarios/
 app.get("/concesionarios", (request, response) => {
   response.json(concesionarios);
 });
 
-// Crear un nuevo concesionario (POST)
+// Crear un nuevo concesionario.(POST)
 //http://localhost:8080/concesionarios/ (Adjuntar en JSON el concesionario nuevo que se quiera crear)
 app.post("/concesionarios", (request, response) => {
   concesionarios.push(request.body);
   response.json({ message: "Concesionario creado con éxito" });
 });
 
-// Obtener un solo concesionario (GET)
-//http://localhost:8080/concesionarios/1 (2,3,4 'Elegir por id el númerpo asignado')
+// Obtener un solo concesionario.(GET)
+//http://localhost:8080/concesionarios/1 (Ejemplo:1,2,3,4 'Elegir por id el número asignado para obtener')
 app.get("/concesionarios/:id", (request, response) => {
-  const id = request.params.id;
-  const concesionario = concesionarios.find((concesionario) => concesionario.id === id);
-  response.json({ concesionario });
+  response.json({
+    concesionario: concesionarios.find(
+      (concesionario) => concesionario.id === request.params.id
+    ),
+  });
 });
 
-// Actualizar un solo concesionarios (PUT)
+// Actualizar un solo concesionarios.(PUT)
+// http://localhost:8080/concesionarios/1 (Escribe en el body el cambio a realizar)
 app.put("/concesionarios/:id", (request, response) => {
-  const id = request.params.id;
-  const concesionario = concesionarios.find((concesionario) => concesionario.id === id);
-  concesionarios[concesionario] = request.body;
+  Object.assign(
+    concesionarios.find(
+      (concesionario) => concesionario.id === request.params.id
+    ),
+    request.body
+  );
   response.json({ message: "Concesionario actualizado con éxito" });
 });
 
-// Borrar un elemento del array (DELETE)
+// Borrar un elemento del array.(DELETE)
+// http://localhost:8080/concesionarios/1 (Ejemplo:1,2,3,4 'Elegir por id el número asignado para borrar')
 app.delete("/concesionarios/:id", (request, response) => {
-  const id = request.params.id;
   concesionarios = concesionarios.filter(
-    (item) => concesionarios.indexOf(item) !== id
+    (concesionario) => concesionario.id !== request.params.id
   );
-
   response.json({ message: "Concesionario borrado con éxito" });
 });
 
-// Devuelve todos los coches
-// del concesionario pasado por id (solo los coches).(GET)
+// Devuelve todos los coches del concesionario pasado por id (solo los coches).(GET)
+// http://localhost:8080/concesionarios/coches
 app.get("/coches", (request, response) => {
-  response.json(coches);
+  const todosLosCoches = concesionarios.flatMap(
+    (concesionario) => concesionario.coches
+  );
+  response.json(todosLosCoches);
 });
 
-// Añadir un nuevo coche al concesionario pasado por id
-// (solo los coches) (GET)
-app.post("/coches", (request, response) => {
-  coches.push(request.body);
-  response.json({ message: "Coche creado al concesionario con éxito" });
+// Añadir un nuevo coche al concesionario pasado por id (solo los coches).(GET)
+// http://localhost:8080/concesionarios/1/coches
+app.post("/concesionarios/:id/coches", (request, response) => {
+  concesionarios
+    .find((concesionario) => concesionario.id === request.params.id)
+    ?.coches.push(request.body);
+  response.json({ message: "Coche añadido al concesionario con éxito" });
 });
 
 // Añade un nuevo coche al concesionario pasado por id.(POST)
+// http://localhost:8080/concesionarios/:id/coches
 app.get("/coches/:id", (request, response) => {
-  const id = request.params.id;
-  const result = coches[id];
-  response.json({ result });
+  response.json({
+    result: coches.find((coche) => coche.id === request.params.id),
+  });
 });
 
-// Obtiene el coche cuyo id sea cocheId, del concesionario
-// pasado por id (GET)
-app.post("/coches", (request, response) => {
-  coches.push(request.body);
-  response.json({ message: "CocheId obtenido del concesionario con éxito" });
+// Obtiene el coche cuyo id sea cocheId, del concesionario pasado por id.(GET)
+// http://localhost:8080/concesionarios/:id/coches/:cochesId
+app.get("/concesionarios/:id/coches/:cocheId", (request, response) => {
+  const { id, cocheId } = request.params;
+  const coche = concesionarios[id]?.coches.find(
+    (concesionario) => concesionario.id === cocheId
+  );
+  response.json({
+    message: "CocheId obtenido del concesionario con éxito",
+    coche,
+  });
 });
 
-// Actualiza el coche cuyo id sea cocheId, del concesionario
-// pasado por id (PUT)
-app.put("/coches/:id", (request, response) => {
-  const id = request.params.id;
-  coches[id] = request.body;
+// Actualiza el coche cuyo id sea cocheId, del concesionario pasado por id. (PUT)
+// http://localhost:8080/concesionarios/:id/coches/:cochesId
+app.put("/concesionarios/:id/coches/:cocheId", (request, response) => {
+  const { id, cocheId } = request.params;
+  const concesionario = concesionarios.find(
+    (concesionario) => concesionario.id === id
+  );
+  if (concesionario)
+    Object.assign(
+      concesionario.coches.find(
+        (concesionario) => concesionario.id === cocheId
+      ),
+      req.body
+    );
   response.json({ message: "CocheId actualizado del concesionario con éxito" });
 });
 
-// Borra el coche cuyo id sea cocheId, del concesionario pasado
-// por id (DELETE)
-app.delete("/coches/:id", (request, response) => {
-  const id = request.params.id;
-  coches = coches.filter((item) => coches.indexOf(item) !== id);
-
-  response.json({ message: "CocheId borrado del concesionario con éxito" });
+// Borra el coche cuyo id sea cocheId, del concesionario pasado por id. (DELETE)
+// http://localhost:8080/concesionarios/:id/coches/:cochesId
+app.delete("/coches/:id", (req, res) => {
+  coches = coches.filter((item) => item.id !== req.params.id);
+  res.json({ message: "CocheId borrado del concesionario con éxito" });
 });
