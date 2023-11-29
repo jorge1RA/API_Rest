@@ -114,7 +114,6 @@ app.get("/concesionarios/:id/coches", (request, response) => {
   response.json(concesionario?.coches || []);
 });
 
-
 // Añadir un nuevo coche al concesionario pasado por id (solo los coches).(GET)
 // http://localhost:8080/concesionarios/1/coches
 app.post("/concesionarios/:id/coches", (request, response) => {
