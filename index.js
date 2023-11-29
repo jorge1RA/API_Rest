@@ -128,7 +128,7 @@ app.post("/concesionarios/:id/coches", (request, response) => {
 // http://localhost:8080/concesionarios/1/coches/a1
 app.get("/concesionarios/:id/coches/:cocheId", (request, response) => 
     response.json(concesionarios.find(concesionario => concesionario.id === 
-      request.params.id)?.coches.find(coche => coche.id === req.params.cocheId) || 
+      request.params.id)?.coches.find(coche => coche.id === request.params.cocheId) || 
       { error: "Coche no encontrado" })
 );
 
