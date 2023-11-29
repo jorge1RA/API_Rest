@@ -109,12 +109,11 @@ app.delete("/concesionarios/:id", (request, response) => {
 
 // Devuelve todos los coches del concesionario pasado por id (solo los coches).(GET)
 // http://localhost:8080/concesionarios/coches
-app.get("/coches", (request, response) => {
-  const todosLosCoches = concesionarios.flatMap(
-    (concesionario) => concesionario.coches
-  );
-  response.json(todosLosCoches);
+app.get("/concesionarios/:id/coches", (request, response) => {
+  const concesionario = concesionarios.find((concesionaroio) => concesionario.id === request.params.id);
+  response.json(concesionario?.coches || []);
 });
+
 
 // Añadir un nuevo coche al concesionario pasado por id (solo los coches).(GET)
 // http://localhost:8080/concesionarios/1/coches
