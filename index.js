@@ -107,7 +107,7 @@ app.delete("/concesionarios/:id", (request, response) => {
 });
 
 // Devuelve todos los coches de todos los concesionarios (GET)
-// http://localhost:8080/concesionarios/coches
+// http://localhost:8080/concesionarios/1/coches (Ejemplo:1,2,3,4 'Elegir por id el número asignado devolver todos los coches de casa concesionario')
 app.get("/concesionarios/:id/coches", (request, response) => {
   const coches = concesionarios.find((concesionario) => concesionario.id === request.params.id)?.coches || [];
   response.json(coches);
