@@ -106,7 +106,7 @@ app.delete("/concesionarios/:id", (request, response) => {
   response.json({ message: "Concesionario borrado con éxito" });
 });
 
-// Devuelve todos los coches de todos los concesionarios (GET)
+// Devuelve todos los coches del concesionario pasado por id (solo los coches) (GET)
 // http://localhost:8080/concesionarios/1/coches (Ejemplo:1,2,3,4 'Elegir por id el número asignado devolver todos los coches de casa concesionario')
 app.get("/concesionarios/:id/coches", (request, response) => {
   const coches = concesionarios.find((concesionario) => concesionario.id === request.params.id)?.coches || [];
@@ -114,7 +114,7 @@ app.get("/concesionarios/:id/coches", (request, response) => {
 });
 
 
-// Añadir un nuevo coche al concesionario pasado por id (solo los coches).(GET)
+// Añadir un nuevo coche al concesionario pasado por id.(POST)
 // http://localhost:8080/concesionarios/1/coches
 app.post("/concesionarios/:id/coches", (request, response) => {
   concesionarios
@@ -123,13 +123,6 @@ app.post("/concesionarios/:id/coches", (request, response) => {
   response.json({ message: "Coche añadido al concesionario con éxito" });
 });
 
-// Añade un nuevo coche al concesionario pasado por id.(POST)
-// http://localhost:8080/concesionarios/:id/coches
-app.get("/coches/:id", (request, response) => {
-  response.json({
-    result: coches.find((coche) => coche.id === request.params.id),
-  });
-});
 
 // Obtiene el coche cuyo id sea cocheId, del concesionario pasado por id.(GET)
 // http://localhost:8080/concesionarios/:id/coches/:cochesId
