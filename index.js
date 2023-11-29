@@ -125,16 +125,10 @@ app.post("/concesionarios/:id/coches", (request, response) => {
 
 
 // Obtiene el coche cuyo id sea cocheId, del concesionario pasado por id.(GET)
-// http://localhost:8080/concesionarios/1/coches/:cochesId
-app.get("/concesionarios/:id/coches/:cocheId", (request, response) => {
-  const { id, cocheId } = request.params;
-  const coche = concesionarios[id]?.coches.find(
-    (concesionario) => concesionario.id === cocheId
-  );
-  response.json({
-    message: "CocheId obtenido del concesionario con éxito",
-    coche,
-  });
+// http://localhost:8080/concesionarios/1/coches/a1
+app.get("/concesionarios/:id/coches", (request, response) => {
+  const coches = concesionarios.find((concesionario) => concesionario.id === request.params.id)?.coches || [];
+  response.json(coches);
 });
 
 // Actualiza el coche cuyo id sea cocheId, del concesionario pasado por id. (PUT)
