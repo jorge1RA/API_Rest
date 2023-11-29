@@ -125,7 +125,7 @@ app.post("/concesionarios/:id/coches", (request, response) => {
 
 
 // Obtiene el coche cuyo id sea cocheId, del concesionario pasado por id.(GET)
-// http://localhost:8080/concesionarios/:id/coches/:cochesId
+// http://localhost:8080/concesionarios/1/coches/:cochesId
 app.get("/concesionarios/:id/coches/:cocheId", (request, response) => {
   const { id, cocheId } = request.params;
   const coche = concesionarios[id]?.coches.find(
@@ -138,8 +138,8 @@ app.get("/concesionarios/:id/coches/:cocheId", (request, response) => {
 });
 
 // Actualiza el coche cuyo id sea cocheId, del concesionario pasado por id. (PUT)
-// http://localhost:8080/concesionarios/:id/coches/:cochesId
-app.put("/concesionarios/:id/coches/:cocheId", (request, response) => {
+// http://localhost:8080/concesionarios/1/coches/:cochesId
+app.put("/concesionarios/1/coches/:cocheId", (request, response) => {
   const { id, cocheId } = request.params;
   const concesionario = concesionarios.find(
     (concesionario) => concesionario.id === id
@@ -155,7 +155,7 @@ app.put("/concesionarios/:id/coches/:cocheId", (request, response) => {
 });
 
 // Borra el coche cuyo id sea cocheId, del concesionario pasado por id. (DELETE)
-// http://localhost:8080/concesionarios/:id/coches/:cochesId
+// http://localhost:8080/concesionarios/1/coches/:cochesId
 app.delete("/coches/:id", (req, res) => {
   coches = coches.filter((item) => item.id !== req.params.id);
   res.json({ message: "CocheId borrado del concesionario con éxito" });
