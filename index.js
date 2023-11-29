@@ -79,7 +79,7 @@ app.post("/concesionarios", (request, response) => {
   response.json({ message: "Concesionario creado con éxito" });
 });
 
-// Obtener un solo concesionario.(GET)
+// Obtener un concesionario.(GET)
 //http://localhost:8080/concesionarios/1 (Ejemplo:1,2,3,4 'Elegir por id el número asignado para obtener')
 app.get("/concesionarios/:id", (request, response) => {
   response.json({
@@ -89,7 +89,7 @@ app.get("/concesionarios/:id", (request, response) => {
   });
 });
 
-// Actualizar un solo concesionarios.(PUT)
+// Actualizar un concesionarios.(PUT)
 // http://localhost:8080/concesionarios/1 (Escribe en el body el cambio a realizar)
 app.put("/concesionarios/:id", (request, response) => {
   const concesionario = concesionarios.find((concesionario) => concesionario.id === request.params.id);
@@ -97,7 +97,7 @@ app.put("/concesionarios/:id", (request, response) => {
   response.json({ message: "Concesionario actualizado con éxito" });
 });
 
-// Borrar un elemento del array.(DELETE)
+// Borrar un concesionario.(DELETE)
 // http://localhost:8080/concesionarios/1 (Ejemplo:1,2,3,4 'Elegir por id el número asignado para borrar')
 app.delete("/concesionarios/:id", (request, response) => {
   concesionarios = concesionarios.filter(
