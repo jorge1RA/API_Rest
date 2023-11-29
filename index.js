@@ -108,10 +108,11 @@ app.delete("/concesionarios/:id", (request, response) => {
 
 // Devuelve todos los coches de todos los concesionarios (GET)
 // http://localhost:8080/concesionarios/coches
-app.get("/concesionarios/coches", (request, response) => {
-  const todosLosCoches = concesionarios.flatMap((concesionario) => concesionario.coches);
-  response.json(todosLosCoches);
+app.get("/concesionarios/:id/coches", (request, response) => {
+  const coches = concesionarios.find((concesionario) => concesionario.id === req.params.id)?.coches || [];
+  response.json(coches);
 });
+
 
 
 // Añadir un nuevo coche al concesionario pasado por id (solo los coches).(GET)
