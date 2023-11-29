@@ -92,7 +92,7 @@ app.get("/concesionarios/:id", (request, response) => {
 // Actualizar un solo concesionarios.(PUT)
 // http://localhost:8080/concesionarios/1 (Escribe en el body el cambio a realizar)
 app.put("/concesionarios/:id", (request, response) => {
-  const concesionario = concesionarios.find((c) => concesionario.id === request.params.id);
+  const concesionario = concesionarios.find((concesionario) => concesionario.id === request.params.id);
   if (concesionario) Object.assign(concesionario, request.body);
   response.json({ message: "Concesionario actualizado con éxito" });
 });
