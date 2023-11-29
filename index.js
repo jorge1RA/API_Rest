@@ -97,7 +97,6 @@ app.put("/concesionarios/:id", (request, response) => {
   response.json({ message: "Concesionario actualizado con éxito" });
 });
 
-
 // Borrar un elemento del array.(DELETE)
 // http://localhost:8080/concesionarios/1 (Ejemplo:1,2,3,4 'Elegir por id el número asignado para borrar')
 app.delete("/concesionarios/:id", (request, response) => {
@@ -108,10 +107,10 @@ app.delete("/concesionarios/:id", (request, response) => {
 });
 
 // Devuelve todos los coches del concesionario pasado por id (solo los coches).(GET)
-// http://localhost:8080/concesionarios/coches
-app.get("/concesionarios/:id/coches", (request, response) => {
-  const concesionario = concesionarios.find((concesionaroio) => concesionario.id === request.params.id);
-  response.json(concesionario?.coches || []);
+// http://localhost:8080/concesionarios/:id/coches
+app.get("/concesionarios/:id/coches", (req, res) => {
+  const concesionario = concesionarios.find((c) => c.id === req.params.id);
+  res.json(concesionario?.coches || []);
 });
 
 // Añadir un nuevo coche al concesionario pasado por id (solo los coches).(GET)
