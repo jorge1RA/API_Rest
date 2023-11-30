@@ -140,13 +140,11 @@ app.get("/concesionarios/:id/coches/:cocheId", (request, response) =>
 );
 
 // Actualiza el coche cuyo id sea cocheId, del concesionario pasado por id. (PUT)
-// http://localhost:8080/concesionarios/1/coches/:cochesId
+// http://localhost:8080/concesionarios/1/coches/a1
 app.put("/concesionarios/:id/coches/:cocheId", (request, response) => {
-  const concesionario = concesionarios.find(
-    (concesionario) => concesionario.id === request.params.id
-  );
-  if (concesionario) Object.assign(concesionario, request.body);
-  response.json({ message: "Cochde del concesionario actualizado con éxito" });
+  const coche = concesionarios.find((concesionario) => concesionario.id === request.params.id)
+    ?.coches.find((coche) => coche.id === request.params.cocheId);coche && Object.assign(coche, request.body);
+  response.json({ message: "Coche del concesionario actualizado con éxito" });
 });
 
 // Borra el coche cuyo id sea cocheId, del concesionario pasado por id. (DELETE)
