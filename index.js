@@ -10,30 +10,29 @@
  */
 
 // Importamos Mongoose
-const mongoose = require('mongoose');
+const mongoose = require("mongoose");
 
 // Conexión Mongoose
-  mongoose.connect('mongodb://localhost:27017/mi_bd')
-  .then(() => console.log('Conectado a MongoDB'))
-  .catch(err => console.error('Error al conectar con MongoDB', err));
+  mongoose.connect("mongodb://127.0.0.1:27017/mi_bd")
+  .then(() => console.log("Conectado a MongoDB"))
+  .catch((err) => console.error("Error al conectar con MongoDB", err));
 
 // Importamos PostgreSQL
-const { Pool } = require('pg');
+const { Pool } = require("pg");
 
 // Conexión PostgreSQL
 const pool = new Pool({
-  user: 'postgres',
-  host: 'localhost',
-  database: 'mi_bd',
-  password: '0000',
+  user: "postgres",
+  host: "localhost",
+  database: "mi_bd",
+  password: "0000",
   port: 5432,
 });
 
-// Manejador de conexiones 
-pool.on('connect', () => {
-  console.log('Conectado a la base de datos PostgreSQL');
+// Manejador de conexiones
+pool.on("connect", () => {
+  console.log("Conectado a la base de datos PostgreSQL");
 });
-
 
 // Importamos las bibliotecas necesarias concretamente el framework express.
 const express = require("express");
@@ -177,8 +176,18 @@ app.put("/concesionarios/:id/coches/:cocheId", (request, response) => {
 
 // Borra el coche cuyo id sea cocheId, del concesionario pasado por id. (DELETE)
 // http://localhost:8080/concesionarios/1/coches/a1
-app.delete("/concesionarios/:concesionarioId/coches/:cocheId", (request, response) => {
-  const concesionario = concesionarios.find(concesionario => concesionario.id === request.params.concesionarioId);
-  concesionario?.coches.splice(concesionario.coches.findIndex(coche => coche.id === request.params.cocheId), 1);
-  response.json({ message: "Coche borrado del concesionario con éxito" });
-});
+app.delete(
+  "/concesionarios/:concesionarioId/coches/:cocheId",
+  (request, response) => {
+    const concesionario = concesionarios.find(
+      (concesionario) => concesionario.id === request.params.concesionarioId
+    );
+    concesionario?.coches.splice(
+      concesionario.coches.findIndex(
+        (coche) => coche.id === request.params.cocheId
+      ),
+      1
+    );
+    response.json({ message: "Coche borrado del concesionario con éxito" });
+  }
+);
