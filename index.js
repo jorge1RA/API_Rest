@@ -13,7 +13,7 @@
 const mongoose = require('mongoose');
 
 // Conexión Mongoose
-  mongoose.connect('mongodb://localhost:27017/Databases/mi_bd')
+  mongoose.connect('mongodb://localhost:27017/mi_bd')
   .then(() => console.log('Conectado a MongoDB'))
   .catch(err => console.error('Error al conectar con MongoDB', err));
 
