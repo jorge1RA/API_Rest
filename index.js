@@ -9,6 +9,32 @@
  *   const: es constante y no se puede modificar
  */
 
+// Importamos Mongoose
+const mongoose = require('mongoose');
+
+// Conexión Mongoose
+mongoose.connect('mongodb://localhost:27017/Databases/mi_bd', { useNewUrlParser: true, useUnifiedTopology: true })
+  .then(() => console.log('Conectado a MongoDB'))
+  .catch(err => console.error('Error al conectar a MongoDB', err));
+
+// Importamos PostgreSQL
+const { Pool } = require('pg');
+
+// Conexión PostgreSQL
+const pool = new Pool({
+  user: 'postgres',
+  host: 'localhost',
+  database: 'mi_bd',
+  password: '0000',
+  port: 5432,
+});
+
+// Manejador de conexiones 
+pool.on('connect', () => {
+  console.log('Conectado a la base de datos PostgreSQL');
+});
+
+
 // Importamos las bibliotecas necesarias concretamente el framework express.
 const express = require("express");
 
