@@ -13,9 +13,9 @@
 const mongoose = require('mongoose');
 
 // Conexión Mongoose
-mongoose.connect('mongodb://localhost:27017/Databases/mi_bd', { useNewUrlParser: true, useUnifiedTopology: true })
+  mongoose.connect('mongodb://localhost:27017/Databases/mi_bd')
   .then(() => console.log('Conectado a MongoDB'))
-  .catch(err => console.error('Error al conectar a MongoDB', err));
+  .catch(err => console.error('Error al conectar con MongoDB', err));
 
 // Importamos PostgreSQL
 const { Pool } = require('pg');
