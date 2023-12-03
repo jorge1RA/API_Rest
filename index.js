@@ -11,6 +11,9 @@ const { Pool } = require("pg");
 // Importamos las bibliotecas necesarias concretamente el framework express.
 const express = require("express");
 
+// Importamos helmet 'middleware de seguridad para Express'
+const helmet = require("helmet");
+
 // Importamos el modelo de Concesionario
 const Concesionario = require('./modelo/concesionario');
 
@@ -19,6 +22,10 @@ const app = express();
 
 // Configuraciones iniciales
 app.use(express.json());
+
+// Middleware de seguridad Helmet
+app.use(helmet()); 
+
 const port = process.env.PORT || 8080;
 
 // Conexión a Mongoose
@@ -41,10 +48,10 @@ pool.on("connect", () => {
   console.log("Conectado a la base de datos PostgreSQL");
 });
 
-// Definición de la función para subir los datos a la base de datos
+// Función de subida de datos a la BD 
 async function SubirBaseDeDatos() {
   const concesionarios = [
-    // Tus datos de concesionarios aquí...
+    // Alojamiaento de datos de concesionarios en el caso necesario aquí...
   ];
 
   try {
@@ -59,8 +66,10 @@ async function SubirBaseDeDatos() {
 //http://localhost:8080/concesionarios/
 app.get("/concesionarios", async (request, response) => {
   try {
+    // Inserta los datos en la base de datos utilizando el modelo "Concesionario"
     response.json(await Concesionario.find());
   } catch (err) {
+    // En caso de error, muestra un mensaje de error
     response.status(500).send(err.message);
   }
 });

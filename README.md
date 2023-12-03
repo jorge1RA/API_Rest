@@ -1,4 +1,4 @@
-# README - API de Concesionarios y Coches
+# README - API de Concesionarios y Coches  
 
 ## Descripción
 
@@ -53,6 +53,10 @@ Para utilizar esta API, sigue estos pasos:
 2. Instala las dependencias: `npm install`
 3. Inicia la aplicación: `node index.js`
 4. Utiliza herramientas como Postman para probar las rutas y operaciones de la API.
+
+## Seguridad
+
+Esta API utiliza el middleware Helmet para mejorar la seguridad. Helmet ayuda a proteger la aplicación de varias vulnerabilidades conocidas mediante la configuración de encabezados HTTP de manera segura.
 
 ## Verificación del Código
 
