@@ -57,45 +57,26 @@ app.listen(port, () => {
   console.log(`Servidor desplegado en puerto: ${port}`);
 });
 
-// Definimos una estructura de datos (temporal hasta incorporar una base de datos).
+
+// Subimos la base de datos a Mongoose-DB
+async function SubirBaseDeDatos() {
+  try {
+    await Concesionario.insertMany(concesionarios); 
+    console.log("Base de datos subida con éxito");
+  } catch (err) {
+    console.error("Error al subirla base de datos:", err);
+  }
+}
+
+SubirBaseDeDatos();
+
+// Definimos una estructura de datos
 let concesionarios = [
-  {
-    id: "1",
-    nombre: "Concesionario Premium",
-    direccion: "Calle Principal 123",
-    coches: [
-      { id: "a1", modelo: "BMW Serie 3", cv: 255, precio: 45000 },
-      { id: "a2", modelo: "Audi A4", cv: 201, precio: 41000 },
-    ],
-  },
-  {
-    id: "2",
-    nombre: "Concesionario Deportivo",
-    direccion: "Avenida Revolución 456",
-    coches: [
-      { id: "b1", modelo: "Porsche 911", cv: 379, precio: 100000 },
-      { id: "b2", modelo: "Chevrolet Corvette", cv: 490, precio: 59000 },
-    ],
-  },
-  {
-    id: "3",
-    nombre: "Concesionario Familiar",
-    direccion: "Bulevar del Parque 789",
-    coches: [
-      { id: "c1", modelo: "Toyota RAV4", cv: 203, precio: 36000 },
-      { id: "c2", modelo: "Honda CR-V", cv: 190, precio: 33000 },
-    ],
-  },
-  {
-    id: "4",
-    nombre: "Concesionario Económico",
-    direccion: "Ruta del Sol 101",
-    coches: [
-      { id: "d1", modelo: "Hyundai Elantra", cv: 147, precio: 20000 },
-      { id: "d2", modelo: "Kia Forte", cv: 147, precio: 19000 },
-    ],
-  },
+  
 ];
+
+module.exports = concesionarios;
+
 
 // Obtener todos los concesionarios.(GET)
 //http://localhost:8080/concesionarios/
@@ -210,18 +191,18 @@ app.put("/concesionarios/:id/coches/:cocheId", async (request, response) => {
 
 // Borra el coche cuyo id sea cocheId, del concesionario pasado por id. (DELETE)
 // http://localhost:8080/concesionarios/1/coches/a1
-app.delete(
-  "/concesionarios/:concesionarioId/coches/:cocheId",
-  (request, response) => {
-    const concesionario = concesionarios.find(
-      (concesionario) => concesionario.id === request.params.concesionarioId
-    );
-    concesionario?.coches.splice(
-      concesionario.coches.findIndex(
-        (coche) => coche.id === request.params.cocheId
-      ),
-      1
-    );
+app.delete("/concesionarios/:concesionarioId/coches/:cocheId", async (request, response) => {
+  try {
+    const update = { $pull: { coches: { _id: request.params.cocheId } } };
+    const concesionario = await Concesionario.findByIdAndUpdate(request.params.concesionarioId, update, { new: true });
+
+    if (!concesionario) {
+      return response.status(404).send("Concesionario o coche no encontrado");
+    }
+
     response.json({ message: "Coche borrado del concesionario con éxito" });
+  } catch (err) {
+    response.status(500).send(err.message);
   }
-);
+});
+
