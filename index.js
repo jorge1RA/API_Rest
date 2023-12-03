@@ -38,7 +38,7 @@ pool.on("connect", () => {
 
 
 // Conexión a MongoDB y PostgreSQL...
-const Concesionario = require('./models/Concesionario');
+const Concesionario = require('./modelo/concesionario');
 
 // Importamos las bibliotecas necesarias concretamente el framework express.
 const express = require("express");
