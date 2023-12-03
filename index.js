@@ -2,27 +2,34 @@
 // Estamos usando Node.js, donde ciertas reglas podemos hacer que sean ignoradas ya
 // que estamos usando Eslint.
 
-/**
- * Tres formas de almacenar valores en memoria en javascript:
- *   let: se puede modificar
- *   var: se puede modificar
- *   const: es constante y no se puede modificar
- */
-
-// MODIFICACIÓN ENDPOINT - MONGOOSE-DB
-
 // Importamos Mongoose
 const mongoose = require("mongoose");
-
-// Conexión Mongoose
-  mongoose.connect("mongodb://127.0.0.1:27017/mi_bd")
-  .then(() => console.log("Conectado a MongoDB"))
-  .catch((err) => console.error("Error al conectar con MongoDB", err));
 
 // Importamos PostgreSQL
 const { Pool } = require("pg");
 
-// Conexión PostgreSQL
+// Importamos las bibliotecas necesarias concretamente el framework express.
+const express = require("express");
+
+// Importamos el modelo de Concesionario
+const Concesionario = require('./modelo/concesionario');
+
+// Inicializamos la aplicación express
+const app = express();
+
+// Configuraciones iniciales
+app.use(express.json());
+const port = process.env.PORT || 8080;
+
+// Conexión a Mongoose
+mongoose.connect("mongodb://127.0.0.1:27017/mi_bd")
+  .then(() => {
+    console.log("Conectado a MongoDB");
+    SubirBaseDeDatos(); // Llamamos aquí a la función para asegurar que la conexión esté establecida
+  })
+  .catch((err) => console.error("Error al conectar con MongoDB", err));
+
+// Conexión a PostgreSQL
 const pool = new Pool({
   user: "postgres",
   host: "localhost",
@@ -30,53 +37,23 @@ const pool = new Pool({
   password: "0000",
   port: 5432,
 });
-
-// Manejador de conexiones
 pool.on("connect", () => {
   console.log("Conectado a la base de datos PostgreSQL");
 });
 
-
-// Conexión a MongoDB y PostgreSQL...
-const Concesionario = require('./modelo/concesionario');
-
-// Importamos las bibliotecas necesarias concretamente el framework express.
-const express = require("express");
-
-// Inicializamos la aplicación.
-const app = express();
-
-// Indicamos que la aplicación puede recibir JSON (API Rest).
-app.use(express.json());
-
-// Indicamos el puerto en el que vamos a desplegar la aplicación.
-const port = process.env.PORT || 8080;
-
-// Arrancamos la aplicación.
-app.listen(port, () => {
-  console.log(`Servidor desplegado en puerto: ${port}`);
-});
-
-
-// Subimos la base de datos a Mongoose-DB
+// Definición de la función para subir los datos a la base de datos
 async function SubirBaseDeDatos() {
+  const concesionarios = [
+    // Tus datos de concesionarios aquí...
+  ];
+
   try {
-    await Concesionario.insertMany(concesionarios); 
+    await Concesionario.insertMany(concesionarios);
     console.log("Base de datos subida con éxito");
   } catch (err) {
     console.error("Error al subirla base de datos:", err);
   }
 }
-
-SubirBaseDeDatos();
-
-// Definimos una estructura de datos
-let concesionarios = [
-  
-];
-
-module.exports = concesionarios;
-
 
 // Obtener todos los concesionarios.(GET)
 //http://localhost:8080/concesionarios/
@@ -204,5 +181,11 @@ app.delete("/concesionarios/:concesionarioId/coches/:cocheId", async (request, r
   } catch (err) {
     response.status(500).send(err.message);
   }
+});
+
+
+// Arrancamos la aplicación en el puerto especificado
+app.listen(port, () => {
+  console.log(`Servidor desplegado en puerto: ${port}`);
 });
 
