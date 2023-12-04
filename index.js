@@ -16,7 +16,7 @@ const helmet = require("helmet");
 
 // Importamos Swagger UI
 const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = requiere('./swagger.json'); // Reemplaza "./swagger.json" con la ubicación de tu archivo swagger.json
+const swaggerDocument = requiere('./swagger.json'); 
 
 // Importamos el modelo de Concesionario
 const Concesionario = require('./modelo/concesionario');
