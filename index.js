@@ -31,7 +31,7 @@ app.use(express.json());
 app.use(helmet());
 
 // Configuración Swagger UI
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument)); //http://localhost:8080/api-docs/
 
 const port = process.env.PORT || 8080;
 
