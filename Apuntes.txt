@@ -81,3 +81,22 @@ db.inventory.deleteMany({})
 // Elimina documentos en la colección "inventory" que cumplen con el criterio
 db.inventory.deleteMany({ status : "A" })
 db.inventory.deleteOne( { status: "D" } )
+
+
+------------------------------------------------------------------------------------------------------------------------------
+
+
+Práctica 4.3 - Swagger en API Rest
+
+EXPLICACIÓN PIZARRA - CLASE
+----------------------------
+
+- FRONTED                                   
+
+
+- BARKED: API = Documentar / automatico
+              = Probar API 
+              = Swagger
+              = OPENAPI (Excluido por falta de tiempo) 
+
+

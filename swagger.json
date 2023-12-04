@@ -1,0 +1,144 @@
+{
+    "swagger": "2.0",
+    "basePath": "/",
+    "info": {
+      "title": "Concesionarios API",
+      "version": "1.0.0"
+    },
+    "definitions": {
+      "Coche": {
+        "type": "object",
+        "properties": {
+          "modelo": {
+            "type": "string"
+          },
+          "cv": {
+            "type": "integer"
+          },
+          "precio": {
+            "type": "number"
+          }
+        },
+        "required": ["modelo", "cv", "precio"]
+      },
+      "Concesionario": {
+        "type": "object",
+        "properties": {
+          "_id": {
+            "type": "string"
+          },
+          "nombre": {
+            "type": "string"
+          },
+          "direccion": {
+            "type": "string"
+          },
+          "coches": {
+            "type": "array",
+            "items": {
+              "$ref": "#/definitions/Coche"
+            }
+          }
+        },
+        "required": ["_id", "nombre", "direccion", "coches"]
+      }
+    },
+    "paths": {
+      "/concesionarios": {
+        "get": {
+          "summary": "Obtener todos los concesionarios",
+          "responses": {
+            "200": {
+              "description": "Lista de concesionarios.",
+              "schema": {
+                "type": "array",
+                "items": {
+                  "$ref": "#/definitions/Concesionario"
+                }
+              }
+            }
+          }
+        },
+        "post": {
+          "summary": "Crear un nuevo concesionario",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "body",
+              "name": "concesionario",
+              "schema": {
+                "$ref": "#/definitions/Concesionario"
+              }
+            }
+          ],
+          "responses": {
+            "201": {
+              "description": "Concesionario creado con éxito."
+            }
+          }
+        }
+      },
+      "/concesionarios/{id}": {
+        "get": {
+          "summary": "Obtener un concesionario por ID",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Detalles del concesionario.",
+              "schema": {
+                "$ref": "#/definitions/Concesionario"
+              }
+            }
+          }
+        },
+        "put": {
+          "summary": "Actualizar un concesionario",
+          "consumes": ["application/json"],
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            },
+            {
+              "in": "body",
+              "name": "concesionario",
+              "schema": {
+                "$ref": "#/definitions/Concesionario"
+              }
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Concesionario actualizado con éxito."
+            }
+          }
+        },
+        "delete": {
+          "summary": "Eliminar un concesionario",
+          "parameters": [
+            {
+              "in": "path",
+              "name": "id",
+              "required": true,
+              "type": "string"
+            }
+          ],
+          "responses": {
+            "200": {
+              "description": "Concesionario eliminado con éxito."
+            }
+          }
+        }
+      }
+    }
+  }
+  

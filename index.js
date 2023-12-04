@@ -14,6 +14,10 @@ const express = require("express");
 // Importamos helmet 'middleware de seguridad para Express'
 const helmet = require("helmet");
 
+// Importamos Swagger UI
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = requiere('./swagger.json'); // Reemplaza "./swagger.json" con la ubicación de tu archivo swagger.json
+
 // Importamos el modelo de Concesionario
 const Concesionario = require('./modelo/concesionario');
 
@@ -23,8 +27,11 @@ const app = express();
 // Configuraciones iniciales
 app.use(express.json());
 
-// Middleware de seguridad Helmet
+// Configuración de middleware de seguridad Helmet
 app.use(helmet()); 
+
+// Configuración Swagger UI
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 
 const port = process.env.PORT || 8080;
 
